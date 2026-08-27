@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lucid - Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    body {
+      background-image: url('background.png');
+      background-repeat: repeat;
+      background-size: 500px auto;
+      animation: scroll 20s linear infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #0f051d;
+    }
+    @keyframes scroll {
+      from { background-position: 0 0; }
+      to { background-position: 500px 500px; }
+    }
+    .box {
+      background: rgba(26, 11, 46, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 45px;
+      width: 440px;
+      text-align: center;
+      border-radius: 20px;
+      border: 1px solid rgba(168, 85, 247, 0.25);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(147, 51, 234, 0.15);
+    }
+    .logo {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 20px auto;
+      display: block;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(147, 51, 234, 0.4);
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #f3e8ff;
+      margin-bottom: 24px;
+      letter-spacing: -0.5px;
+    }
+    .alert {
+      color: #fca5a5;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      padding: 12px;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 10px;
+      background: rgba(127, 29, 29, 0.3);
+      display: none;
+    }
+    .row {
+      position: relative;
+      margin-bottom: 16px;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 12px;
+      font-size: 15px;
+      background: rgba(15, 5, 29, 0.6);
+      color: #fff;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    input::placeholder {
+      color: #a855f7;
+      opacity: 0.5;
+    }
+    input:focus {
+      outline: none;
+      border-color: #c084fc;
+      background-color: rgba(15, 5, 29, 0.9);
+      box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.2);
+    }
+    .eye {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #c084fc;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.2s;
+    }
+    .eye:hover {
+      color: #fff;
+    }
+    .check-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 22px 0;
+      font-size: 14px;
+      color: #d8b4fe;
+    }
+    .check-row input[type="checkbox"] {
+      accent-color: #9333ea;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #a855f7, #7e22ce);
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
+    }
+    .btn:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+    .btn:active {
+      transform: scale(0.98);
+    }
+    .link {
+      color: #c084fc;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      display: inline-block;
+      margin-top: 18px;
+      transition: color 0.2s;
+    }
+    .link:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+    .footer {
+      margin-top: 22px;
+      font-size: 14px;
+      color: #d8b4fe;
+    }
+    .switch, .tos {
+      color: #f3e8ff;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .tos:hover, .switch:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box" id="card">
+    <img src="logo.png" alt="Logo" class="logo">
+    <h1 id="heading">Login to Lucid</h1>
+    
+    <div class="alert" id="error"></div>
+
+    <div>
+      <div class="row">
+        <input type="text" id="user" placeholder="Email or Username">
+      </div>
+      <div class="row">
+        <input type="password" id="pass" placeholder="Password">
+        <span class="eye" id="show-btn">Show</span>
+      </div>
+    </div>
+
+    <div class="check-row">
+      <input type="checkbox" id="check">
+      <label for="check">I agree to the <a href="rules.html" target="_blank" class="tos">Terms of Service</a></label>
+    </div>
+
+    <button class="btn" id="go">Log In</button>
+    
+    <div>
+      <a href="#" class="link" id="lost">Forgot Password or Username?</a>
+    </div>
+    
+    <div class="footer" id="foot">
+      Don't have an account? <span class="switch" id="toggle">Sign Up</span>
+    </div>
+  </div>
+
+  <script>
+    const card = document.getElementById('card');
+    const heading = document.getElementById('heading');
+    const user = document.getElementById('user');
+    const pass = document.getElementById('pass');
+    const showBtn = document.getElementById('show-btn');
+    const check = document.getElementById('check');
+    const error = document.getElementById('error');
+    const go = document.getElementById('go');
+    const foot = document.getElementById('foot');
+    const lost = document.getElementById('lost');
+    let loginView = true;
+
+    function navigateTo(page) {
+      const path = window.location.pathname;
+      const dir = path.substring(0, path.lastIndexOf('/') + 1);
+      window.location.href = window.location.origin + dir + page;
+    }
+
+    showBtn.addEventListener('click', () => {
+      if (pass.type === 'password') {
+        pass.type = 'text';
+        showBtn.textContent = 'Hide';
+      } else {
+        pass.type = 'password';
+        showBtn.textContent = 'Show';
+      }
+    });
+
+    go.addEventListener('click', () => {
+      error.style.display = 'none';
+      const uVal = user.value.trim();
+      const pVal = pass.value.trim();
+
+      if (!uVal || !pVal) {
+        error.textContent = "Please fill in all inputs.";
+        error.style.display = 'block';
+        return;
+      }
+
+      if (!check.checked) {
+        error.textContent = "You must agree to the Terms of Service first!";
+        error.style.display = 'block';
+        return;
+      }
+
+      let localUsers = JSON.parse(localStorage.getItem('lucid_users')) || [];
+
+      if (loginView) {
+        const found = localUsers.find(u => u.username.toLowerCase() === uVal.toLowerCase() && u.password === pVal);
+        if (!found) {
+          error.textContent = "Invalid username or password.";
+          error.style.display = 'block';
+        } else {
+          localStorage.setItem('lucid_current_user', found.username);
+          navigateTo('home.html');
+        }
+      } else {
+        const taken = localUsers.find(u => u.username.toLowerCase() === uVal.toLowerCase());
+        if (taken) {
+          error.textContent = "Username already taken.";
+          error.style.display = 'block';
+        } else {
+          localUsers.push({ username: uVal, password: pVal, luis: 100, bio: '', theme: 'purple' });
+          localStorage.setItem('lucid_users', JSON.stringify(localUsers));
+          alert("Account created successfully!");
+          
+          heading.textContent = 'Login to Lucid';
+          go.textContent = 'Log In';
+          lost.style.display = 'inline-block';
+          foot.innerHTML = 'Don\'t have an account? <span class="switch" id="toggle">Sign Up</span>';
+          loginView = true;
+          user.value = '';
+          pass.value = '';
+          check.checked = false;
+        }
+      }
+    });
+
+    card.addEventListener('click', (e) => {
+      if (e.target.id === 'toggle') {
+        error.style.display = 'none';
+        check.checked = false;
+        user.value = '';
+        pass.value = '';
+        
+        if (loginView) {
+          heading.textContent = 'Sign Up to Lucid';
+          go.textContent = 'Sign Up';
+          lost.style.display = 'none';
+          foot.innerHTML = 'Already have an account? <span class="switch" id="toggle">Log In</span>';
+          loginView = false;
+        } else {
+          heading.textContent = 'Login to Lucid';
+          go.textContent = 'Log In';
+          lost.style.display = 'inline-block';
+          foot.innerHTML = 'Don\'t have an account? <span class="switch" id="toggle">Sign Up</span>';
+          loginView = true;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
