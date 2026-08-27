@@ -28,37 +28,45 @@
     }
     header {
       width: 100%;
-      max-width: 540px;
+      max-width: 680px;
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 24px;
     }
-    .back-btn {
+    .nav-group {
+      display: flex;
+      gap: 8px;
+    }
+    .nav-btn, .logout-btn {
       background: rgba(26, 11, 46, 0.7);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(168, 85, 247, 0.3);
       color: #e9d5ff;
-      padding: 10px 18px;
+      padding: 10px 14px;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 13px;
       border-radius: 12px;
       cursor: pointer;
       text-decoration: none;
       transition: all 0.2s ease;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
-    .back-btn:hover {
+    .nav-btn:hover, .logout-btn:hover {
       background: rgba(147, 51, 234, 0.3);
       border-color: #c084fc;
       color: #fff;
+      transform: translateY(-1px);
     }
-    .box {
+    main {
+      width: 100%;
+      max-width: 680px;
+    }
+    .container {
       background: rgba(26, 11, 46, 0.85);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       padding: 35px;
-      width: 100%;
-      max-width: 540px;
       border-radius: 20px;
       border: 1px solid rgba(168, 85, 247, 0.25);
       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(147, 51, 234, 0.15);
@@ -70,70 +78,45 @@
       margin-bottom: 24px;
       letter-spacing: -0.5px;
     }
-    h2 {
+    .section-title {
       font-size: 16px;
-      font-weight: 600;
-      color: #c084fc;
-      margin-top: 24px;
+      font-weight: 700;
+      color: #f3e8ff;
       margin-bottom: 14px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid rgba(168, 85, 247, 0.2);
     }
-    .alert {
-      color: #fca5a5;
-      font-size: 13px;
-      font-weight: 500;
-      margin-bottom: 20px;
-      padding: 12px;
-      border: 1px solid rgba(239, 68, 68, 0.3);
-      border-radius: 10px;
-      background: rgba(127, 29, 29, 0.3);
-      display: none;
-    }
-    .success-alert {
-      color: #86efac;
-      font-size: 13px;
-      font-weight: 500;
-      margin-bottom: 20px;
-      padding: 12px;
-      border: 1px solid rgba(34, 197, 94, 0.3);
-      border-radius: 10px;
-      background: rgba(20, 83, 45, 0.3);
-      display: none;
+    .divider-line {
+      height: 1px;
+      background: rgba(168, 85, 247, 0.25);
+      margin: 24px 0;
     }
     .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
       margin-bottom: 16px;
     }
-    label {
-      display: block;
+    .form-group label {
       font-size: 13px;
       font-weight: 600;
       color: #d8b4fe;
-      margin-bottom: 6px;
     }
-    input[type="text"], input[type="password"], select {
+    .form-group input {
       width: 100%;
       padding: 12px 16px;
       border: 1px solid rgba(168, 85, 247, 0.3);
       border-radius: 12px;
-      font-size: 15px;
+      font-size: 14px;
       background: rgba(15, 5, 29, 0.6);
       color: #fff;
-      transition: all 0.25s ease;
     }
-    select option {
-      background: #1a0b2e;
-      color: #fff;
-    }
-    input:focus, select:focus {
+    .form-group input:focus {
       outline: none;
       border-color: #c084fc;
       background-color: rgba(15, 5, 29, 0.9);
       box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.2);
     }
-    .btn {
-      width: 100%;
-      padding: 12px;
+    .action-btn {
+      padding: 12px 20px;
       background: linear-gradient(135deg, #a855f7, #7e22ce);
       border: none;
       color: #fff;
@@ -142,14 +125,14 @@
       border-radius: 12px;
       cursor: pointer;
       transition: all 0.2s ease;
-      margin-top: 6px;
       box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+      width: 100%;
     }
-    .btn:hover {
+    .action-btn:hover {
       filter: brightness(1.1);
     }
-    .btn-danger {
-      background: linear-gradient(135deg, #ef4444, #991b1b);
+    .danger-btn {
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
       box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
     }
   </style>
@@ -157,54 +140,41 @@
 <body>
 
   <header>
-    <a href="home.html" class="back-btn">&larr; Back to Dashboard</a>
+    <div class="nav-group">
+      <a href="home.html" class="nav-btn">Dashboard</a>
+      <a href="games.html" class="nav-btn">Games</a>
+      <a href="friends.html" class="nav-btn">Friends</a>
+    </div>
+    <div class="nav-group">
+      <a href="settings.html" class="nav-btn" style="border-color: #c084fc; background: rgba(147, 51, 234, 0.3); color: #fff;">Settings</a>
+      <button class="logout-btn" id="logout-btn">Log Out</button>
+    </div>
   </header>
 
-  <div class="box">
-    <h1>Account Settings</h1>
-    <div class="alert" id="settings-error"></div>
-    <div class="success-alert" id="settings-success"></div>
+  <main>
+    <div class="container">
+      <h1>Account Settings</h1>
 
-    <!-- Section 1: Username Update -->
-    <h2>Identity Profile</h2>
-    <div class="form-group">
-      <label>New Username</label>
-      <input type="text" id="new-username" placeholder="Enter new username">
-    </div>
-    <div class="form-group">
-      <label>Confirm Password</label>
-      <input type="password" id="confirm-password-user" placeholder="Required to change username">
-    </div>
-    <button class="btn" id="save-username">Update Username</button>
+      <div class="form-group">
+        <label>Logged in as User</label>
+        <input type="text" id="settings-username" readonly style="opacity: 0.7; cursor: not-allowed;">
+      </div>
 
-    <!-- Section 2: Password Change -->
-    <h2>Security & Password</h2>
-    <div class="form-group">
-      <label>Current Password</label>
-      <input type="password" id="current-pass" placeholder="Enter current password">
-    </div>
-    <div class="form-group">
-      <label>New Password</label>
-      <input type="password" id="new-pass" placeholder="Enter new password">
-    </div>
-    <button class="btn" id="save-password">Update Password</button>
+      <div class="divider-line"></div>
 
-    <!-- Section 3: Preferences -->
-    <h2>Preferences</h2>
-    <div class="form-group">
-      <label>Interface Glow Accent</label>
-      <select id="theme-select">
-        <option value="purple">Royal Purple (Default)</option>
-        <option value="neon">Neon Cyber</option>
-        <option value="midnight">Deep Midnight</option>
-      </select>
-    </div>
-    <button class="btn" id="save-preferences">Save Preferences</button>
+      <div class="section-title">Change Password</div>
+      <div class="form-group">
+        <label>New Password</label>
+        <input type="password" id="new-password" placeholder="Enter new password...">
+      </div>
+      <button class="action-btn" onclick="updatePassword()" style="margin-bottom: 10px;">Update Password</button>
 
-    <!-- Section 4: Danger Zone -->
-    <h2>Danger Zone</h2>
-    <button class="btn btn-danger" id="delete-account">Delete Account</button>
-  </div>
+      <div class="divider-line"></div>
+
+      <div class="section-title" style="color: #fca5a5;">Danger Zone</div>
+      <button class="action-btn danger-btn" onclick="clearLocalData()">Reset / Clear Local Storage Data</button>
+    </div>
+  </main>
 
   <script>
     function navigateTo(page) {
@@ -217,107 +187,37 @@
     if (!currentUser) {
       navigateTo('index.html');
     } else {
-      document.getElementById('new-username').value = currentUser;
-      let users = JSON.parse(localStorage.getItem('lucid_users')) || [];
-      let userObj = users.find(u => u.username.toLowerCase() === currentUser.toLowerCase());
-      if (userObj && userObj.theme) {
-        document.getElementById('theme-select').value = userObj.theme;
-      }
+      document.getElementById('settings-username').value = currentUser;
     }
 
-    const errorEl = document.getElementById('settings-error');
-    const successEl = document.getElementById('settings-success');
-
-    function showAlert(msg, isSuccess = false) {
-      errorEl.style.display = 'none';
-      successEl.style.display = 'none';
-      if (isSuccess) {
-        successEl.textContent = msg;
-        successEl.style.display = 'block';
-      } else {
-        errorEl.textContent = msg;
-        errorEl.style.display = 'block';
-      }
-    }
-
-    // 1. Update Username Handler
-    document.getElementById('save-username').addEventListener('click', () => {
-      const newName = document.getElementById('new-username').value.trim();
-      const passwordVal = document.getElementById('confirm-password-user').value.trim();
-
-      if (!newName || !passwordVal) {
-        showAlert("Please fill out both your new username and password confirmation.");
+    function updatePassword() {
+      const newPass = document.getElementById('new-password').value.trim();
+      if (!newPass) {
+        alert("Please enter a valid new password.");
         return;
       }
-
-      let users = JSON.parse(localStorage.getItem('lucid_users')) || [];
-      let userObj = users.find(u => u.username.toLowerCase() === currentUser.toLowerCase());
-
-      if (!userObj || userObj.password !== passwordVal) {
-        showAlert("Incorrect password verification.");
-        return;
-      }
-
-      const nameTaken = users.some(u => u.username.toLowerCase() === newName.toLowerCase() && u.username.toLowerCase() !== currentUser.toLowerCase());
-      if (nameTaken) {
-        showAlert("That username is already taken by another account.");
-        return;
-      }
-
-      userObj.username = newName;
-      localStorage.setItem('lucid_users', JSON.stringify(users));
-      localStorage.setItem('lucid_current_user', newName);
-      showAlert("Username updated successfully!", true);
-      setTimeout(() => location.reload(), 1000);
-    });
-
-    // 2. Update Password Handler
-    document.getElementById('save-password').addEventListener('click', () => {
-      const currPass = document.getElementById('current-pass').value.trim();
-      const newPass = document.getElementById('new-pass').value.trim();
-
-      if (!currPass || !newPass) {
-        showAlert("Please fill out both password fields.");
-        return;
-      }
-
-      let users = JSON.parse(localStorage.getItem('lucid_users')) || [];
-      let userObj = users.find(u => u.username.toLowerCase() === currentUser.toLowerCase());
-
-      if (!userObj || userObj.password !== currPass) {
-        showAlert("Current password is incorrect.");
-        return;
-      }
-
-      userObj.password = newPass;
-      localStorage.setItem('lucid_users', JSON.stringify(users));
-      document.getElementById('current-pass').value = '';
-      document.getElementById('new-pass').value = '';
-      showAlert("Password updated successfully!", true);
-    });
-
-    // 3. Save Preferences Handler
-    document.getElementById('save-preferences').addEventListener('click', () => {
-      const selectedTheme = document.getElementById('theme-select').value;
       let users = JSON.parse(localStorage.getItem('lucid_users')) || [];
       let userObj = users.find(u => u.username.toLowerCase() === currentUser.toLowerCase());
       if (userObj) {
-        userObj.theme = selectedTheme;
+        userObj.password = newPass;
         localStorage.setItem('lucid_users', JSON.stringify(users));
+        alert("Password successfully updated!");
+        document.getElementById('new-password').value = '';
+      } else {
+        alert("User record not found.");
       }
-      showAlert("Preferences saved successfully!", true);
-    });
+    }
 
-    // 4. Delete Account Handler
-    document.getElementById('delete-account').addEventListener('click', () => {
-      if (confirm("Are you completely sure you want to delete your Lucid account? This action cannot be undone.")) {
-        let users = JSON.parse(localStorage.getItem('lucid_users')) || [];
-        users = users.filter(u => u.username.toLowerCase() !== currentUser.toLowerCase());
-        localStorage.setItem('lucid_users', JSON.stringify(users));
-        localStorage.removeItem('lucid_current_user');
-        alert("Account deleted.");
+    function clearLocalData() {
+      if (confirm("Are you sure you want to clear all app data? This will log you out and delete user accounts.")) {
+        localStorage.clear();
         navigateTo('index.html');
       }
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('lucid_current_user');
+      navigateTo('index.html');
     });
   </script>
 </body>
