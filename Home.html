@@ -36,16 +36,16 @@
     }
     .nav-group {
       display: flex;
-      gap: 10px;
+      gap: 8px;
     }
     .nav-btn, .logout-btn {
       background: rgba(26, 11, 46, 0.7);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(168, 85, 247, 0.3);
       color: #e9d5ff;
-      padding: 10px 18px;
+      padding: 10px 14px;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 13px;
       border-radius: 12px;
       cursor: pointer;
       text-decoration: none;
@@ -121,6 +121,32 @@
       color: #f3e8ff;
       margin-bottom: 4px;
     }
+    .profile-game-badge {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(15, 5, 29, 0.6);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      padding: 12px 16px;
+      border-radius: 12px;
+    }
+    .game-mini-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .mini-thumb {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #7e22ce, #3b0764);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 11px;
+    }
     .form-group {
       display: flex;
       flex-direction: column;
@@ -140,21 +166,14 @@
       background: rgba(15, 5, 29, 0.6);
       color: #fff;
       resize: vertical;
-      transition: all 0.25s;
     }
     .form-group input[type="file"] {
       font-size: 13px;
       color: #d8b4fe;
       padding: 6px 0;
     }
-    .form-group textarea:focus {
-      outline: none;
-      border-color: #c084fc;
-      background-color: rgba(15, 5, 29, 0.9);
-      box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.2);
-    }
     .action-btn {
-      padding: 14px;
+      padding: 12px;
       background: linear-gradient(135deg, #a855f7, #7e22ce);
       border: none;
       color: #fff;
@@ -168,14 +187,9 @@
     }
     .action-btn:hover {
       filter: brightness(1.1);
-      transform: translateY(-1px);
-    }
-    .action-btn:active {
-      transform: scale(0.98);
     }
   </style>
 
-  <!-- Include Three.js & GLTFLoader -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 </head>
@@ -185,6 +199,7 @@
     <div class="nav-group">
       <a href="home.html" class="nav-btn" style="border-color: #c084fc; background: rgba(147, 51, 234, 0.3); color: #fff;">Dashboard</a>
       <a href="games.html" class="nav-btn">Games</a>
+      <a href="friends.html" class="nav-btn">Friends</a>
     </div>
     <div class="nav-group">
       <a href="settings.html" class="nav-btn">Settings</a>
@@ -207,7 +222,19 @@
       <div class="divider-line"></div>
 
       <div class="customization-panel">
-        <div class="section-title">Profile Customization</div>
+        <div class="section-title">Favorite / Featured Game</div>
+        <div class="profile-game-badge">
+          <div class="game-mini-info">
+            <div class="mini-thumb">TEST</div>
+            <div>
+              <div style="font-weight: 700; color: #fff; font-size: 14px;">Test</div>
+              <div style="font-size: 12px; color: #d8b4fe; opacity: 0.8;">Simulation Environment</div>
+            </div>
+          </div>
+          <a href="games.html" class="nav-btn" style="padding: 6px 12px; font-size: 12px;">Play</a>
+        </div>
+
+        <div class="section-title" style="margin-top: 10px;">Profile Customization</div>
         
         <div class="form-group">
           <label>Biography</label>
@@ -217,7 +244,7 @@
         <div class="form-group">
           <label>Upload player.gltf Avatar (Cost: 50 Luis)</label>
           <input type="file" id="gltf-file-input" accept=".gltf,.glb">
-          <button class="action-btn" onclick="uploadPlayerModel()" style="margin-top: 6px;">Upload Model</button>
+          <button class="action-btn" onclick="uploadPlayerModel()" style="margin-top: 4px;">Upload Model</button>
         </div>
 
         <div class="form-group">
@@ -240,7 +267,6 @@
       navigateTo('index.html');
     } else {
       document.getElementById('profile-display-name').textContent = currentUser;
-      
       let users = JSON.parse(localStorage.getItem('lucid_users')) || [];
       let userObj = users.find(u => u.username.toLowerCase() === currentUser.toLowerCase());
       if (userObj && userObj.bio) {
@@ -256,7 +282,6 @@
     function init3DViewer() {
       const container = document.getElementById('profile-canvas-container');
       scene = new THREE.Scene();
-      
       camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
       camera.position.set(0, 1.5, 3);
 
@@ -264,8 +289,7 @@
       renderer.setSize(container.clientWidth, container.clientHeight);
       container.appendChild(renderer.domElement);
 
-      const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
-      scene.add(ambientLight);
+      scene.add(new THREE.AmbientLight(0xffffff, 1.2));
       const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
       directionalLight.position.set(5, 10, 7);
       scene.add(directionalLight);
@@ -280,9 +304,7 @@
 
     function animate3D() {
       requestAnimationFrame(animate3D);
-      if (currentModel) {
-        currentModel.rotation.y += 0.01;
-      }
+      if (currentModel) currentModel.rotation.y += 0.01;
       renderer.render(scene, camera);
     }
     init3DViewer();
@@ -299,7 +321,6 @@
         bioEl.style.fontStyle = 'italic';
         bioEl.style.opacity = '0.8';
       }
-
       let users = JSON.parse(localStorage.getItem('lucid_users')) || [];
       let userObj = users.find(u => u.username.toLowerCase() === currentUser.toLowerCase());
       if (userObj) {
@@ -314,30 +335,18 @@
         alert("Please select a .gltf or .glb file first!");
         return;
       }
-
-      const file = fileInput.files[0];
-      const url = URL.createObjectURL(file);
-
-      const loader = new THREE.GLTFLoader();
-      loader.load(url, (gltf) => {
-        if (currentModel) {
-          scene.remove(currentModel);
-        }
+      const url = URL.createObjectURL(fileInput.files[0]);
+      new THREE.GLTFLoader().load(url, (gltf) => {
+        if (currentModel) scene.remove(currentModel);
         currentModel = gltf.scene;
-        
         const box = new THREE.Box3().setFromObject(currentModel);
         const center = box.getCenter(new THREE.Vector3());
         const size = box.getSize(new THREE.Vector3());
-        const maxDim = Math.max(size.x, size.y, size.z);
-        const scale = 1.5 / maxDim;
+        const scale = 1.5 / Math.max(size.x, size.y, size.z);
         currentModel.scale.set(scale, scale, scale);
         currentModel.position.sub(center.multiplyScalar(scale));
-
         scene.add(currentModel);
-        alert(`Successfully loaded model: ${file.name} (Cost: 50 Luis processed)`);
-      }, undefined, (error) => {
-        console.error("Error loading glTF model:", error);
-        alert("Failed to parse .gltf file format.");
+        alert("Successfully loaded model!");
       });
     }
 
@@ -346,10 +355,7 @@
       if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-          const banner = document.getElementById('profile-banner');
-          if (banner) {
-            banner.style.backgroundImage = `url('${e.target.result}')`;
-          }
+          document.getElementById('profile-banner').style.backgroundImage = `url('${e.target.result}')`;
         }
         reader.readAsDataURL(file);
       }
