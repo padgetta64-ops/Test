@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lucid - Friends</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    body {
+      background-image: url('background.png');
+      background-repeat: repeat;
+      background-size: 500px auto;
+      animation: scroll 20s linear infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 24px;
+      background-color: #0f051d;
+    }
+    @keyframes scroll {
+      from { background-position: 0 0; }
+      to { background-position: 500px 500px; }
+    }
+    header {
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .nav-group {
+      display: flex;
+      gap: 8px;
+    }
+    .nav-btn, .logout-btn {
+      background: rgba(26, 11, 46, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      color: #e9d5ff;
+      padding: 10px 14px;
+      font-weight: 600;
+      font-size: 13px;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .nav-btn:hover, .logout-btn:hover {
+      background: rgba(147, 51, 234, 0.3);
+      border-color: #c084fc;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+    main {
+      width: 100%;
+      max-width: 680px;
+    }
+    .container {
+      background: rgba(26, 11, 46, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 35px;
+      border-radius: 20px;
+      border: 1px solid rgba(168, 85, 247, 0.25);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(147, 51, 234, 0.15);
+    }
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #f3e8ff;
+      letter-spacing: -0.5px;
+    }
+    .friend-count {
+      background: rgba(147, 51, 234, 0.2);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      color: #c084fc;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 50px 20px;
+      background: rgba(15, 5, 29, 0.5);
+      border: 1px dashed rgba(168, 85, 247, 0.3);
+      border-radius: 14px;
+      color: #d8b4fe;
+    }
+    .empty-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+    .empty-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .empty-sub {
+      font-size: 13px;
+      opacity: 0.7;
+      margin-bottom: 20px;
+    }
+    .add-friend-box {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+    input[type="text"] {
+      flex-grow: 1;
+      padding: 12px 16px;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 12px;
+      font-size: 14px;
+      background: rgba(15, 5, 29, 0.6);
+      color: #fff;
+    }
+    input:focus {
+      outline: none;
+      border-color: #c084fc;
+      background-color: rgba(15, 5, 29, 0.9);
+      box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.2);
+    }
+    .btn {
+      padding: 12px 20px;
+      background: linear-gradient(135deg, #a855f7, #7e22ce);
+      border: none;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+    }
+    .btn:hover {
+      filter: brightness(1.1);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-group">
+      <a href="home.html" class="nav-btn">Dashboard</a>
+      <a href="games.html" class="nav-btn">Games</a>
+      <a href="friends.html" class="nav-btn" style="border-color: #c084fc; background: rgba(147, 51, 234, 0.3); color: #fff;">Friends</a>
+    </div>
+    <div class="nav-group">
+      <a href="settings.html" class="nav-btn">Settings</a>
+      <button class="logout-btn" id="logout-btn">Log Out</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="header-row">
+        <h1>Friends List</h1>
+        <div class="friend-count">0 Friends</div>
+      </div>
+
+      <div class="empty-state">
+        <div class="empty-icon">👥</div>
+        <div class="empty-text">No friends added yet</div>
+        <div class="empty-sub">You don't have any friends right now (0)</div>
+      </div>
+
+      <div class="add-friend-box">
+        <input type="text" id="friend-input" placeholder="Enter username to add friend...">
+        <button class="btn" onclick="alert('Friend request feature coming soon!')">Add Friend</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function navigateTo(page) {
+      const path = window.location.pathname;
+      const dir = path.substring(0, path.lastIndexOf('/') + 1);
+      window.location.href = window.location.origin + dir + page;
+    }
+
+    if (!localStorage.getItem('lucid_current_user')) {
+      navigateTo('index.html');
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('lucid_current_user');
+      navigateTo('index.html');
+    });
+  </script>
+</body>
+</html>
